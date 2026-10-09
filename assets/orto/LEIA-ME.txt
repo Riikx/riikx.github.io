@@ -1,0 +1,12 @@
+Coloque seu ortomosaico nesta pasta.
+
+Para visualizar na demonstração:
+1. Use uma imagem PNG, JPG ou WebP exportada do ortomosaico.
+2. Abra o portfólio e clique em "Drone & linhas".
+3. Clique em "Abrir meu orto" e selecione a imagem desta pasta.
+
+O arquivo fica no seu computador e não é enviado para um servidor.
+Se o original for GeoTIFF (.tif/.tiff), exporte uma versão PNG ou JPG para esta prévia.
+
+Esta visualização não lê coordenadas geográficas. As linhas da demonstração
+continuam sendo fictícias e não representam linhas medidas no seu ortomosaico.
