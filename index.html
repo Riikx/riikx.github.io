@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conheça Henrique: atuação com piloto automático para tratores e desenvolvimento de sites.">
+  <title>Henrique | Tecnologia no campo e na web</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f4;
+      color: #203329;
+      line-height: 1.7;
+    }
+    a { color: inherit; }
+    .container { max-width: 1050px; margin: auto; padding: 0 24px; }
+    header { border-bottom: 1px solid #dce3dc; }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 0;
+      flex-wrap: wrap;
+    }
+    .logo { font-size: 22px; font-weight: bold; text-decoration: none; }
+    .links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .links a { text-decoration: none; font-size: 14px; }
+    .hero { padding: 90px 0; }
+    .tag {
+      color: #4c725a;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 800px;
+      margin: 18px 0;
+      font-size: clamp(36px, 6vw, 66px);
+      line-height: 1.12;
+      letter-spacing: -2px;
+    }
+    .intro { max-width: 620px; font-size: 19px; color: #526258; }
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 24px;
+      border-radius: 8px;
+      background: #235c3a;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .button:hover { background: #18452b; }
+    section { padding: 55px 0; }
+    h2 { font-size: 30px; line-height: 1.2; margin-top: 0; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border: 1px solid #dce3dc;
+      border-radius: 14px;
+    }
+    .number { color: #62836b; font-size: 14px; font-weight: bold; }
+    .card h3 { font-size: 23px; margin: 12px 0; }
+    .card p { color: #526258; }
+    .about { max-width: 720px; }
+    .contact {
+      background: #203329;
+      color: white;
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .contact p { color: #d4dfd6; }
+    .contact .button { background: #d5edab; color: #203329; }
+    footer { padding: 30px 0; font-size: 14px; color: #526258; }
+    a:focus-visible { outline: 3px solid #759c45; outline-offset: 5px; }
+    @media (max-width: 650px) {
+      .hero { padding: 60px 0; }
+      .cards { grid-template-columns: 1fr; }
+      .contact { padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="Navegação principal">
+        <a class="logo" href="#">Henrique<span style="color:#62836b">.</span></a>
+        <div class="links">
+          <a href="#servicos">Serviços</a>
+          <a href="#sobre">Sobre mim</a>
+          <a href="#contato">Contato</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="tag">Tecnologia no campo e na web</span>
+      <h1>Do campo ao digital, tecnologia que faz parte do seu dia.</h1>
+      <p class="intro">
+        Sou Henrique. Trabalho com piloto automático para tratores
+        e crio sites para pessoas e negócios que querem se apresentar na internet.
+      </p>
+      <a class="button" href="#servicos">Conheça meu trabalho →</a>
+    </section>
+
+    <section id="servicos">
+      <h2>Como posso ajudar</h2>
+      <div class="cards">
+        <article class="card">
+          <span class="number">01 / CAMPO</span>
+          <h3>Piloto automático para tratores</h3>
+          <p>
+            Trabalho com tecnologia de piloto automático aplicada
+            às operações agrícolas. Entre em contato para conversar
+            sobre sua necessidade.
+          </p>
+        </article>
+        <article class="card">
+          <span class="number">02 / DIGITAL</span>
+          <h3>Criação de sites</h3>
+          <p>
+            Desenvolvo sites para apresentar serviços, projetos e negócios.
+            Um espaço na internet pensado para o que você precisa comunicar.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="sobre" class="about">
+      <span class="tag">Sobre mim</span>
+      <h2>Olá, eu sou Henrique.</h2>
+      <p>
+        Minha atuação conecta dois universos: a tecnologia no campo
+        e o desenvolvimento de sites. Aqui você pode conhecer minhas
+        áreas de trabalho e entrar em contato comigo.
+      </p>
+    </section>
+
+    <section id="contato">
+      <div class="contact">
+        <h2>Vamos conversar sobre seu projeto?</h2>
+        <p>
+          Conheça meu perfil no GitHub e acompanhe meus projetos.
+        </p>
+        <a class="button" href="https://github.com/Riikx">
+          Acessar meu GitHub →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    Henrique · Tecnologia no campo e na web
+  </footer>
+</body>
+</html>
