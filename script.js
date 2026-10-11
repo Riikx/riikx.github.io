@@ -109,6 +109,8 @@ function drawField(){
   [.13,.87].forEach(y=>{c.beginPath();c.moveTo(dw*.035,dh*y);c.lineTo(dw*.965,dh*y);c.stroke();});
   c.setLineDash([]);c.fillStyle='#d4c6a3';c.font='9px Segoe UI, sans-serif';c.fillText('CARREADOR / CABECEIRA',12,dh*.07);c.fillText('CANA PLANTADA · CORREDORES DE GUIA',12,dh*.97);
 }
+window.addEventListener('portfolio:tractor-ready',()=>{window.portfolioTractorLoadError=false;driveFrame();});
+window.addEventListener('portfolio:tractor-error',()=>{window.portfolioTractorLoadError=true;driveFrame();});
 function driveFrame(){
   window.portfolioDriveState={x:pos.x,y:pos.y,angle,night,headlightMode,auto,distance,fieldWidth:dw,fieldHeight:dh,
     reversing:!auto&&Boolean(window.portfolioCabinActive)&&cabinControls.lookBehind,
@@ -122,7 +124,10 @@ function driveFrame(){
   if(window.portfolioTractorSprite){
     dc.rotate(-Math.PI/2);dc.drawImage(window.portfolioTractorSprite,-22,-22,44,44);dc.restore();return;
   }
-  dc.fillStyle='#10130e';dc.fillRect(-9,-12,13,5);dc.fillRect(-9,7,13,5);dc.fillRect(5,-9,8,4);dc.fillRect(5,5,8,4);dc.fillStyle='#a3c64a';dc.fillRect(-10,-6,24,12);dc.fillStyle='#dcefa8';dc.fillRect(3,-5,11,10);dc.fillStyle='#294236';dc.fillRect(-7,-5,9,10);dc.fillStyle='#f3dfa0';dc.fillRect(12,-5,2,3);dc.fillRect(12,2,2,3);dc.restore();
+  dc.restore();
+  dc.save();dc.fillStyle='#dcefa8';dc.font='12px Segoe UI, sans-serif';dc.textAlign='center';
+  dc.fillText(window.portfolioTractorLoadError?'Não foi possível carregar o trator 3D. Atualize para tentar novamente.':'Carregando trator 3D…',dw/2,dh/2);
+  dc.restore();
 }
 function setAuto(value){auto=value;document.querySelector('#auto').setAttribute('aria-pressed',String(value));document.querySelector('#auto').textContent=value?'Pausar piloto automático ↗':'Ativar piloto automático ↗';document.querySelector('#mode').textContent=value?'PILOTO AUTOMÁTICO':'MANUAL';}
 document.querySelector('#auto').addEventListener('click',()=>{if(!auto){if(targetIndex>=route.length){pos={...startPosition};path=[{...pos}];targetIndex=0;}const inCrop=pos.y>.22&&pos.y<.78;const lane=lanes.reduce((best,x,i)=>Math.abs(x-pos.x)<Math.abs(lanes[best]-pos.x)?i:best,0);if(inCrop){pos.x=lanes[lane];path.push({...pos});targetIndex=lane*26+1;}else if(targetIndex===0){pos={...startPosition};path=[{...pos}];}held.clear();}setAuto(!auto);});

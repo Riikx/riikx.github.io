@@ -4,7 +4,7 @@
  bar.innerHTML='<button class="solid drone-3d-toggle" type="button">Voo em 3D ↗</button><button class="solid drone-3d-play" type="button" hidden>Iniciar voo 3D</button><button class="quiet drone-3d-reset" type="button" hidden>Reiniciar voo 3D</button><select class="drone-3d-camera" aria-label="Câmera do voo" hidden><option value="follow">Seguir o drone</option><option value="onboard">Câmera do drone</option></select><span class="drone-3d-status" role="status">Abra um orto para ver o voo sobre ele.</span>';
  api.canvas.before(bar);
  const host=document.createElement('div');host.className='drone-3d-host';host.hidden=true;api.canvas.after(host);
- let active=false,loading=false,renderer,scene,camera,drone,ground,T,texture,last=0,progress=0,flying=false,props=[],yaw=0,drag=null,currentImage=null;
+ let active=false,loading=false,renderer,scene,camera,drone,ground,T,texture,last=0,progress=0,flying=false,yaw=0,drag=null,currentImage=null;
  const toWorld=p=>new T.Vector3((p.x-.5)*40,4,(p.y-.5)*40*api.image.naturalHeight/api.image.naturalWidth);
  function report(text){$('.drone-3d-status').textContent=text;}
  async function setup(){
@@ -15,9 +15,20 @@
   scene=new T.Scene();scene.background=new T.Color('#9bb5bd');scene.fog=new T.Fog('#9bb5bd',60,140);camera=new T.PerspectiveCamera(58,1,.05,200);camera.position.set(0,12,16);
   scene.add(new T.HemisphereLight(0xffffff,0x526c48,2));const sun=new T.DirectionalLight(0xffffff,2);sun.position.set(10,25,5);scene.add(sun);
   ground=new T.Mesh(new T.PlaneGeometry(40,40),new T.MeshBasicMaterial({color:0xffffff,side:T.DoubleSide}));ground.rotation.x=-Math.PI/2;scene.add(ground);
-  drone=new T.Group();const body=new T.Mesh(new T.BoxGeometry(.65,.22,.9),new T.MeshStandardMaterial({color:0xd7e6d3,metalness:.3,roughness:.5}));drone.add(body);
-  for(const x of [-.75,.75])for(const z of [-.7,.7]){const arm=new T.Mesh(new T.CylinderGeometry(.035,.035,1.05,6),new T.MeshStandardMaterial({color:0x273a2a}));arm.position.set(x/2,0,z/2);arm.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),new T.Vector3(x,0,z).normalize());drone.add(arm);const rotor=new T.Group();rotor.position.set(x,.1,z);for(const angle of [0,Math.PI/2]){const blade=new T.Mesh(new T.BoxGeometry(.85,.018,.08),new T.MeshStandardMaterial({color:0x263327}));blade.rotation.y=angle;rotor.add(blade);}props.push(rotor);drone.add(rotor);const lamp=new T.Mesh(new T.SphereGeometry(.04,6,6),new T.MeshBasicMaterial({color:x<0?0xdcfa87:0xff795e}));lamp.position.set(x,0,z);drone.add(lamp);}
-  const gimbal=new T.Mesh(new T.SphereGeometry(.12,10,10),new T.MeshStandardMaterial({color:0x172019}));gimbal.position.set(0,-.25,.2);drone.add(gimbal);scene.add(drone);
+  const {GLTFLoader}=await import('https://esm.sh/three@0.180.0/examples/jsm/loaders/GLTFLoader.js');
+  const gltf=await new GLTFLoader().loadAsync(new URL('assets/models/dji-fpv.glb',document.baseURI).href);
+  const model=gltf.scene;
+  model.updateMatrixWorld(true);
+  const bounds=new T.Box3().setFromObject(model),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());
+  const scale=2/Math.max(size.x,size.y,size.z);
+  model.scale.multiplyScalar(scale);
+  model.position.addScaledVector(center,-scale);
+  drone=new T.Group();drone.add(model);scene.add(drone);
+  if(!$('.drone-model-credit')){
+   const credit=document.createElement('small');credit.className='drone-model-credit';
+   credit.innerHTML='Modelo DJI FPV por <a href="https://sketchfab.com/3d-models/dji-fpv-by-sdc-high-performance-drone-d471ea8c6235457b8e131842e2cf3783" target="_blank" rel="noopener noreferrer">SDC PERFORMANCE</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>';
+   host.after(credit);
+  }
   renderer.domElement.addEventListener('pointerdown',e=>{drag={x:e.clientX,id:e.pointerId};renderer.domElement.setPointerCapture(e.pointerId);});renderer.domElement.addEventListener('pointermove',e=>{if(drag&&drag.id===e.pointerId){yaw+=(e.clientX-drag.x)*.006;drag.x=e.clientX;}});['pointerup','pointercancel','lostpointercapture'].forEach(event=>renderer.domElement.addEventListener(event,()=>drag=null));
   renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();flying=false;report('Visualização interrompida. Volte ao mapa 2D e atualize a página.');});
  }
@@ -34,7 +45,7 @@
  new ResizeObserver(resize).observe(host);
  function frame(time){const delta=last?Math.min((time-last)/1000,.05):0;last=time;if(active&&api.dialog.open&&!document.hidden&&renderer){
   if(flying){progress=Math.min(api.route.length-1,progress+delta*.42*Number($('.drone-speed').value));if(progress>=api.route.length-1){flying=false;$('.drone-3d-play').textContent='Repetir voo 3D';report('Voo 3D concluído · captura e altitude simuladas.');}}
-  const i=Math.min(Math.floor(progress),api.route.length-2),t=progress-i,a=toWorld(api.route[i]),b=toWorld(api.route[i+1]);drone.position.lerpVectors(a,b,t);drone.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);props.forEach(p=>p.rotation.y+=delta*(flying?35:4));
+  const i=Math.min(Math.floor(progress),api.route.length-2),t=progress-i,a=toWorld(api.route[i]),b=toWorld(api.route[i+1]);drone.position.lerpVectors(a,b,t);drone.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);
   if($('.drone-3d-camera').value==='onboard'){drone.visible=false;camera.position.copy(drone.position).add(new T.Vector3(0,.15,0));camera.lookAt(drone.position.x+Math.sin(drone.rotation.y)*4,0,drone.position.z+Math.cos(drone.rotation.y)*4);}
   else{drone.visible=true;const desired=drone.position.clone().add(new T.Vector3(Math.sin(yaw)*8,8,Math.cos(yaw)*8));camera.position.lerp(desired,1-Math.exp(-5*delta));camera.lookAt(drone.position);}
   try{renderer.render(scene,camera);}catch{report('O navegador bloqueou a textura. Abra a imagem pelo botão Abrir meu orto.');flying=false;}

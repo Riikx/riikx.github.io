@@ -63,6 +63,8 @@
     console.error('Visualizador do trator:', error);
     showStatus('Não foi possível carregar o trator. Verifique a conexão ou selecione models/lamborghini_r6_optimized.glb.');
     fileLabel.hidden = false;
+    loadStarted = false;
+    window.dispatchEvent(new CustomEvent('portfolio:tractor-error'));
   }
 
   // O script de dados permite abrir o HTML direto, sem fetch de um arquivo file://.
@@ -477,8 +479,7 @@
     showStatus('Preparando visualização 3D…');
     try { await (await ensureSetup()).load(); } catch (error) {
       showError(error);
-      loadStarted = false;
-      window.dispatchEvent(new CustomEvent('portfolio:tractor-error'));
+
     }
   });
 })();

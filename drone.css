@@ -3,3 +3,5 @@
 .orto-controls{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:12px 0}.orto-controls .orto-open{margin:0;position:relative;cursor:pointer;font-size:12px}.orto-file{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.orto-open:focus-within{outline:2px solid var(--lime);outline-offset:4px}.orto-status{width:100%;font-size:11px;margin:0;color:var(--dim)}
 .drone-layout .orto-controls .orto-open{color:#19250e;font-weight:600}
 .cane-detect-controls{padding:15px;border:1px solid #49695a;background:#13251d;margin-bottom:12px}.cane-detect-controls label{margin:12px 0 0}.detect-status{font-size:11px;margin:10px 0 0;color:#aad8c7}.detect-cane:disabled{opacity:.6;cursor:wait}
+
+.drone-model-credit{display:block;margin:10px 0;color:var(--dim);font-size:11px}.drone-model-credit a{color:var(--lime)}.drone-3d-host[hidden]+.drone-model-credit{display:none}

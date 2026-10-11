@@ -21,12 +21,11 @@
   diagram.replaceChildren(model,controls);
   document.querySelector('#nav900Marker').addEventListener('click',()=>select('antenna'));
   document.querySelector('#nav900Focus').addEventListener('click',()=>select('antenna'));
-  const script=document.createElement('script');script.src='training/js/tractor-viewer.js';
+  const script=document.createElement('script');script.src='training/js/tractor-viewer.js?v=3d-models-2';
   script.onload=()=>{
     document.dispatchEvent(new CustomEvent('training:system',{detail:{hasNav900:true}}));
-    const cabin=document.querySelector('.cabin-view');
-    if(cabin&&!cabin.hidden)document.dispatchEvent(new CustomEvent('portfolio:load-tractor'));
+    document.dispatchEvent(new CustomEvent('portfolio:load-tractor'));
   };
-  script.onerror=()=>{document.querySelector('#tractorStatus').textContent='Não foi possível iniciar o visualizador do treinamento.';};
+  script.onerror=()=>{window.dispatchEvent(new CustomEvent('portfolio:tractor-error'));document.querySelector('#tractorStatus').textContent='Não foi possível iniciar o visualizador do treinamento.';};
   document.body.append(script);
 })();
