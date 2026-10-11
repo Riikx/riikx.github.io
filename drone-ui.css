@@ -1,0 +1,51 @@
+.drone-demo{width:min(1040px,calc(100vw - 40px));max-height:92dvh;padding:28px;background:#172012;box-sizing:border-box}
+.drone-demo>.eyebrow{margin:0 40px 12px 0;font-size:9px}
+.drone-demo h2{font-size:clamp(28px,4vw,40px);margin:0 0 18px}
+.drone-demo>.close{position:absolute;top:14px;right:14px;width:44px;height:44px}
+.drone-layout{display:flex;flex-direction:column;gap:12px}
+.drone-layout>div{order:0;min-width:0}
+.drone-layout aside{order:1;border:0;padding:0}
+.drone-layout .orto-controls{padding:0 0 12px;gap:8px}
+.drone-layout .orto-status{font-size:11px;line-height:1.5}
+.drone-demo button,.drone-demo .orto-open,.drone-demo .file-button{min-height:44px;box-sizing:border-box}
+.drone-map-toolbar{background:transparent;padding:6px 12px;border-bottom:0;letter-spacing:.5px}
+.drone-map,.drone-3d-host{height:clamp(280px,48dvh,480px);border-radius:0 0 10px 10px;overflow:hidden}
+.drone-3d-controls{padding:10px;gap:8px;border-bottom:0}
+.drone-3d-status{line-height:1.5}
+.drone-fold{border:1px solid var(--line);border-radius:8px;margin-top:12px;background:#121c0f}
+.drone-fold>summary{cursor:pointer;padding:14px 16px;font-size:12px;color:var(--ink);min-height:44px;box-sizing:border-box}
+.drone-fold>summary:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.drone-fold-content{padding:0 16px 16px}
+.drone-fold-content .drone-disclaimer{font-size:11px;line-height:1.6;margin:0;border:0;padding:0}
+.drone-fold-content .note{line-height:1.6;margin-bottom:0}
+.drone-fold-content .drone-map-legend{padding:12px 0;background:transparent;line-height:1.5}
+.drone-flight-options{margin:0;background:transparent;border:0;position:relative}
+.drone-flight-options>summary{padding:12px 10px;color:var(--dim)}
+.drone-flight-options .drone-fold-content{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 0}
+.drone-line-tools .cane-detect-controls,.drone-line-tools .orto-edit-panel,.drone-line-tools .drone-image-controls{border:0;background:transparent;padding:12px 0;margin:0}
+.drone-line-tools .orto-edit-panel{border-top:1px solid var(--line)}
+.drone-demo.drone-is-3d .drone-line-tools{display:none}
+.drone-demo.drone-is-3d .drone-layout aside{display:none}
+.drone-model-credit{font-size:10px;line-height:1.5;margin:8px 0}
+.drone-fold-content .drone-stats{margin:12px 0}
+.drone-demo:fullscreen .drone-map,.drone-demo:fullscreen .drone-3d-host{height:60dvh}
+@media(min-width:700px){.drone-layout aside .drone-fold-content{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}.drone-layout aside .drone-fold-content>.eyebrow,.drone-layout aside .drone-compare{grid-column:1/-1}}
+@media(max-width:600px){
+ .drone-demo{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:20px 14px calc(20px + env(safe-area-inset-bottom));border:0;border-radius:0}
+ .drone-demo h2{margin-bottom:14px;font-size:30px}
+ .drone-demo>.eyebrow{font-size:8px;max-width:calc(100% - 40px);line-height:1.5}
+ .drone-map,.drone-3d-host{height:clamp(250px,43dvh,380px)}
+ .drone-layout .orto-controls>.solid,.drone-layout .orto-controls>.orto-open{flex:1;text-align:center;padding:12px 10px;font-size:12px}
+ .drone-layout .orto-controls>.orto-clear{font-size:11px;min-height:32px}
+ .drone-map-toolbar{font-size:9px;padding:4px 10px}
+ .drone-3d-controls>.drone-3d-toggle,.drone-3d-controls>.drone-3d-play{flex:1;font-size:12px;padding:12px 8px}
+ .drone-flight-options{width:100%}
+ .drone-flight-options>summary{padding:8px 2px;min-height:36px}
+ .drone-3d-status{font-size:10px}
+ .drone-fold-content{padding:0 12px 12px}
+ .drone-layout select,.drone-layout input[type=number]{max-width:100%;font-size:16px;min-height:44px}
+ .drone-layout .actions{flex-wrap:wrap;gap:8px}
+ .drone-layout .actions>button{flex:1;font-size:12px;padding:12px 10px}
+ .drone-image-controls{gap:12px}
+ .drone-fold-content .drone-result b{font-size:24px}
+}
